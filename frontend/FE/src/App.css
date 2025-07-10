@@ -72,3 +72,69 @@
   margin-bottom: 10px;
   border-radius: 5px;
 }
+
+
+/* Login page */
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  max-width: 400px;
+  background-color: #1f1f1f;
+}
+
+.signUp {
+  color: #00adb5;
+  font-size: 32px;
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+  margin: 10px;
+  margin-bottom: 15px;
+}
+
+.username, .email, .password {
+   background-color: #1f1f1f;
+     border-color: #eeeeee;
+     border-radius: 3%;
+     padding:20px 10px;
+     font-size: 18px;
+     width:290px;
+     height: 7px;
+}
+
+.input {
+  margin: 7px;
+}
+
+.getStarted {
+  margin-top: 25px;
+  padding: 10px 20px;
+  background-color: #00adb5;
+  border: none;
+  color: #eeeeee;
+  font-weight: normal;
+  font-size: 22px;
+  border-radius: 20px;
+  cursor: pointer;
+  height: 50px;
+  width: 220px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 20px;
+}
+
+.getStarted:hover {
+  border: 2px solid #eeeeee;
+}
+
+/*Login page*/
+
+
+
