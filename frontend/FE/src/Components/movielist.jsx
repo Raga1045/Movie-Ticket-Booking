@@ -1,7 +1,7 @@
 import './movielist.css';
 import { useNavigate } from 'react-router-dom';
 
-function movielist({id,poster , title , lang,genre,duration}){
+function movielist({id,poster , title , lang,genre,duration,releaseDate,description,cast,reviews}){
      const navigate = useNavigate();
 
   const handleBookNow = () => {
@@ -14,14 +14,10 @@ function movielist({id,poster , title , lang,genre,duration}){
           lang,
           genre,
           duration,
-          releaseDate: '2023-01-0',
-          time: '2h 15m',
-          description: 'Sample movie description...',
-          cast: [
-            { name: 'Actor 1', image: '/assets/actor1.png' },
-            { name: 'Actor 2', image: '/assets/actor2.png' }
-          ],
-          reviews: ['Fantastic!', 'Must watch!']
+          releaseDate,
+          description,
+          cast,
+          reviews
         }
       }
     });
