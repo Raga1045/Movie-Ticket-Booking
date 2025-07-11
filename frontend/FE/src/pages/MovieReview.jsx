@@ -26,11 +26,11 @@ function MovieReview() {
         
         <div className="details-text">
           <h1 style={{fontSize:"50px",color:"#00adb5"}}>{movie.title}</h1>
-          <p style={{fontSize:"28px"}}><strong>Genre:</strong> {movie.genre}</p>
-          <p style={{fontSize:"28px"}}><strong>Language:</strong> {movie.lang}</p>
-          <p style={{fontSize:"28px"}}><strong>Release Date:</strong> {movie.releaseDate}</p>
-          <p style={{fontSize:"28px"}}><strong>Duration:</strong> {movie.duration}</p>
-          <p style={{fontSize:"28px"}}><strong>About Movie:</strong> {movie.description}</p>
+          <p style={{fontSize:"24px"}}><strong style={{color:"#00adb5"}}>Genre:</strong> {movie.genre}</p>
+          <p style={{fontSize:"24px"}}><strong style={{color:"#00adb5"}}>Language:</strong> {movie.lang}</p>
+          <p style={{fontSize:"24px"}}><strong style={{color:"#00adb5"}}>Release Date:</strong> {movie.releaseDate}</p>
+          <p style={{fontSize:"24px"}}><strong style={{color:"#00adb5"}}>Duration:</strong> {movie.duration}</p>
+          <p style={{fontSize:"24px"}}><strong style={{color:"#00adb5"}}>About Movie:</strong> {movie.description}</p>
           <button className="book-now-btn">BOOK NOW</button>
         </div>
       </div>
@@ -39,21 +39,25 @@ function MovieReview() {
        <br></br>
 
       <div className="movie-cast">
-        <h3 style={{fontSize:"28px"}}>Cast:</h3>
+        <h3 style={{fontSize:"28px",color:"#00adb5"}}>Cast:</h3>
         <div className="cast-list">
           {movie.cast?.map((member, index) => (
             <div key={index} className="cast-item">
               <img src={member.image} alt={member.name} />
-              <p>{member.name}</p>
+              <p className="memname">{member.name}</p>
             </div>
           ))}
         </div>
       </div>
 
+      <br></br>
+       <br></br>
+       <br></br>
+
       <div className="movie-reviews">
-        <h3 style={{fontSize:"28px"}}>Reviews:</h3>
+        <h3 style={{fontSize:"28px",color:"#00adb5"}}>Reviews:</h3>
         {movie.reviews?.map((review, index) => (
-          <div key={index} className="review-box">
+          <div style={{fontSize:"20px"}}key={index} className="review-box">
             {review}
           </div>
         ))}

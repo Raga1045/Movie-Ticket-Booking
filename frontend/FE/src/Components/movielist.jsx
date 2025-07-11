@@ -1,7 +1,7 @@
 import './movielist.css';
 import { useNavigate } from 'react-router-dom';
 
-function movielist({id,poster , title , lang,genre,duration,releaseDate,description,cast,reviews}){
+function movielist({id,poster , title , lang,genre,duration,releaseDate,description,cast,reviews,rating}){
      const navigate = useNavigate();
 
   const handleBookNow = () => {
@@ -14,6 +14,7 @@ function movielist({id,poster , title , lang,genre,duration,releaseDate,descript
           lang,
           genre,
           duration,
+          rating,
           releaseDate,
           description,
           cast,
@@ -28,7 +29,7 @@ function movielist({id,poster , title , lang,genre,duration,releaseDate,descript
             <img src={poster} className='poster'/>
             <div className='info'>
                 <p className='title'><b>{title}</b></p>
-                <p className='details'>{lang} | {genre} | {duration}</p>
+                <p className='details'>{lang} | {genre} | {rating}</p>
                 <button className='bookbtn' onClick={handleBookNow}><b>BOOK NOW</b></button>
             </div>
         </div>

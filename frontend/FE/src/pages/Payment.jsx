@@ -28,7 +28,7 @@ function Payment(){
              <span> {movie.theatre }</span>
            </div>
 
-            <div className='details'>Details</div>
+            <div className='detailsPay'>Details</div>
 
             <div className='p-container'>
 
