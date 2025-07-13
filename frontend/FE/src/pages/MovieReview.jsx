@@ -4,10 +4,16 @@ import Navbar from '../Components/navbar';
 // src/pages/MovieReview.jsx
 
 import '../App.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 // import './MovieReview.css'; // Optional: for styling
 
 function MovieReview() {
+
+  const navigate = useNavigate();
+
+  const handle=()=>{
+     navigate(  `/showtime`  ,{state:{movie}})
+  };
   const location = useLocation();
   const movie = location.state?.movie;
 
@@ -31,7 +37,7 @@ function MovieReview() {
           <p style={{fontSize:"24px"}}><strong style={{color:"#00adb5"}}>Release Date:</strong> {movie.releaseDate}</p>
           <p style={{fontSize:"24px"}}><strong style={{color:"#00adb5"}}>Duration:</strong> {movie.duration}</p>
           <p style={{fontSize:"24px"}}><strong style={{color:"#00adb5"}}>About Movie:</strong> {movie.description}</p>
-          <button className="book-now-btn">BOOK NOW</button>
+          <button className="book-now-btn" onClick={handle}>BOOK NOW</button>
         </div>
       </div>
 
