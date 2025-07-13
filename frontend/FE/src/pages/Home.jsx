@@ -1,4 +1,5 @@
-import Header from '../Components/header';
+import React, { useState, useEffect } from "react";
+import Header from '../Components/Header';
 import Navbar from '../Components/navbar';
 import  MovieList from '../Components/movielist';
 import kanappa from '../assets/kanappa.jpg';
@@ -107,9 +108,25 @@ function Home(){
           reviews: ['Fantastic!', 'Must watch!']
         }
     ];
+
+
+     const [selectedLocation, setSelectedLocation] = useState('');
+      const [theatres, setTheatres] = useState([]);
+    
+      useEffect(() => {
+        console.log("FETCH triggered with:", selectedLocation);
+        if(selectedLocation){
+          fetch(`http://localhost:5000/api/theatres?location=${selectedLocation}`)
+          .then(res => res.json())
+          .then(data => setTheatres(data))
+          .catch(err => console.error(err));
+        }
+      }, [selectedLocation]);
+
+
     return(
         <div style={{backgroundColor:"#0f0f00"}}>
-            <Header/>
+            <Header selectedLocation={selectedLocation} onLocationChange={setSelectedLocation}/>
             <Navbar/>
             <div className='moviegrid'>
       {movies.map((movie) => (
