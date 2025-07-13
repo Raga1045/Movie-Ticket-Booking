@@ -5,6 +5,7 @@ const showtimeController = require('../controllers/showtimeController');
 router.get('/', showtimeController.getAllShowtimes);
 router.get('/:id', showtimeController.getShowtimeById);
 router.get('/movie/:id', showtimeController.getShowtimesForMovie);
+router.post('/', showtimeController.createShowtime);
 
 module.exports = router;
 
