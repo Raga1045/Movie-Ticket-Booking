@@ -1,4 +1,6 @@
+import React, { useState, useEffect } from "react";
 import  {BrowserRouter as BR , Routes , Route} from "react-router-dom";
+
 import Home from "./pages/Home";
 import MovieReview from "./pages/MovieReview";
 import Showtime from "./pages/Showtime";
@@ -8,11 +10,9 @@ import Payment from "./pages/Payment";
 
 
 function App() {
-  
 
   return (
-    <body style={{backgroundColor:"#0f0f00"}}>
-     <div>
+     <div style={{ backgroundColor: "#0f0f00",  minHeight: "100vh"  }}>
         <BR>
           <Routes>
              <Route path="/" element={<Home/>}/>
@@ -24,7 +24,7 @@ function App() {
           </Routes>
         </BR>
      </div>
-     </body>
+     
   );
 }
 

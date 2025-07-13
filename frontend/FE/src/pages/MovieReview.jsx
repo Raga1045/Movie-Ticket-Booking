@@ -1,4 +1,4 @@
-import Header from '../Components/header';
+import Header from '../Components/Header';
 import Navbar from '../Components/navbar';
 
 // src/pages/MovieReview.jsx
