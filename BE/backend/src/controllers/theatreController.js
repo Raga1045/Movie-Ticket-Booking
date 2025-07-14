@@ -4,11 +4,15 @@ const Showtime = require('../models/showtimes');
 exports.getAllTheatres = async (req, res) => {
     try {
         const location = req.query.location;
+        console.log("Requested location:", location);
 
         const filter = {};
         if (location) filter.location = location;
+        console.log("Mongo filter:", filter);
 
-        const theatres = await Theatre.find(filter); // no parameter --> gets all documents
+        const theatres = await Theatre.find(filter);
+         console.log("Found theatres:", theatres);
+          // no parameter --> gets all documents
         res.status(200).json(theatres);
     }
     catch(err){

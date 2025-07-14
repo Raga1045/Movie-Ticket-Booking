@@ -9,6 +9,7 @@ import devara from '../assets/devara.webp';
 import sv from '../assets/sv.avif';
 import szp from '../assets/szp.jpg';
 import '../App.css';
+
 function Home(){
     const movies=[
         {
@@ -114,25 +115,45 @@ function Home(){
       const [theatres, setTheatres] = useState([]);
     
       useEffect(() => {
+
         console.log("FETCH triggered with:", selectedLocation);
+
         if(selectedLocation){
+           console.log("Fetching with:", selectedLocation);
+
           fetch(`http://localhost:5000/api/theatres?location=${selectedLocation}`)
           .then(res => res.json())
-          .then(data => setTheatres(data))
+          .then(data => {
+            console.log("Fetched theatres:", data);
+            setTheatres(data);})
           .catch(err => console.error(err));
         }
       }, [selectedLocation]);
 
 
     return(
-        <div style={{backgroundColor:"#0f0f00"}}>
+        <div style={{backgroundColor:"#0f0f00", color: '#eeeeee'}}>
             <Header selectedLocation={selectedLocation} onLocationChange={setSelectedLocation}/>
             <Navbar/>
-            <div className='moviegrid'>
+
+         <div className='moviegrid'>
       {movies.map((movie) => (
         <MovieList key={movie.id} {...movie} />
       ))}
-    </div>
+    </div>   
+     {theatres.length > 0 ? (
+      <ul>
+        {theatres.map((theatre) => (
+          <li key={theatre._id} style={{ marginBottom: "20px" }}>
+            <h3>{theatre.name}</h3>
+            <p>{theatre.address}</p>
+            {/* Optional: Add button to view showtimes here later */}
+          </li>
+        ))}
+      </ul>
+    ) : (
+      selectedLocation && <p>No theatres found for this location.</p>
+    )}
             
         </div>
 

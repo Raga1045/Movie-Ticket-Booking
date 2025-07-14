@@ -1,3 +1,4 @@
+const cors = require('cors');
 require('dotenv').config();
 
 const express = require('express');
@@ -11,6 +12,7 @@ const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 app.use(express.json()); // this makes it possible for your express server to understand and work with json data sent by clients
+app.use(cors());
 
 app.use('/api/movies', movieRoutes);
 app.use('/api/theatres', theatreRoutes);
