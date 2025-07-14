@@ -1,4 +1,4 @@
-import './movielist.css';
+import './Movielist.css';
 import { useNavigate } from 'react-router-dom';
 
 function movielist({id,poster , title , lang,genre,duration,releaseDate,description,cast,reviews,rating}){
