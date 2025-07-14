@@ -111,52 +111,47 @@ function Home(){
     ];
 
 
-     const [selectedLocation, setSelectedLocation] = useState('');
-      const [theatres, setTheatres] = useState([]);
     
-      useEffect(() => {
+const [selectedLocation, setSelectedLocation] = useState('');
+        const [Movies, setMovies] = useState([]);
 
-        console.log("FETCH triggered with:", selectedLocation);
-
-        if(selectedLocation){
-           console.log("Fetching with:", selectedLocation);
-
-          fetch(`http://localhost:5000/api/theatres?location=${selectedLocation}`)
-          .then(res => res.json())
-          .then(data => {
-            console.log("Fetched theatres:", data);
-            setTheatres(data);})
-          .catch(err => console.error(err));
-        }
-      }, [selectedLocation]);
-
+useEffect(() => {
+  if (selectedLocation) {
+    fetch(`http://localhost:5000/api/movies?location=${selectedLocation}`)
+      .then(res => res.json())
+      .then(data => setMovies(data))
+      .catch(err => console.error(err));
+  }
+}, [selectedLocation]);
 
     return(
+
         <div style={{backgroundColor:"#0f0f00", color: '#eeeeee'}}>
             <Header selectedLocation={selectedLocation} onLocationChange={setSelectedLocation}/>
             <Navbar/>
-
          <div className='moviegrid'>
       {movies.map((movie) => (
         <MovieList key={movie.id} {...movie} />
       ))}
     </div>   
-     {theatres.length > 0 ? (
-      <ul>
-        {theatres.map((theatre) => (
-          <li key={theatre._id} style={{ marginBottom: "20px" }}>
-            <h3>{theatre.name}</h3>
-            <p>{theatre.address}</p>
-            {/* Optional: Add button to view showtimes here later */}
-          </li>
-        ))}
-      </ul>
-    ) : (
-      selectedLocation && <p>No theatres found for this location.</p>
-    )}
-            
-        </div>
 
+     <div style={{ color: "#fff" }}>
+  {Movies.length > 0 ? (
+    <ul>
+      {Movies.map((movie) => (
+        <li key={movie._id}>
+          <h3>{movie.title}</h3>
+          <p>{movie.description}</p>
+          {/* Button to select showtime or theatre */}
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p>No movies found for this location.</p>
+  )}
+</div>
+
+        </div>
     );
 };
 
