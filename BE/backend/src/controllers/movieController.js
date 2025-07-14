@@ -2,22 +2,61 @@ const Movie = require('../models/movies');
 const Theatre = require('../models/theatres');
 const Showtime = require('../models/showtimes');
 
+
 exports.getAllMovies = async (req, res) => {
-    try {
-        const genre = req.query.genre;
-        const language = req.query.language;
+  try {
+    const { genre, language, location } = req.query;
 
-        const filter = {};   
-        if (genre) filter.genre = genre; 
-        if (language) filter.language = language;
+    const filter = {};
+    if (genre) filter.genre = genre;
+    if (language) filter.language = language;
 
-        const movies = await Movie.find(filter); 
-        res.status(200).json(movies);
+    let movies;
+
+    if (location) {
+      // Step 1: Find theatres in that location
+      const theatres = await Theatre.find({ location });
+
+      const theatreIds = theatres.map(t => t._id);
+
+      // Step 2: Find showtimes for those theatres
+      const showtimes = await Showtime.find({ theatre: { $in: theatreIds } });
+
+      const movieIds = showtimes.map(s => s.movie);
+
+      // Step 3: Filter movies by those IDs + other filters
+      movies = await Movie.find({ 
+        _id: { $in: movieIds },
+        ...filter
+      });
+
+    } else {
+      movies = await Movie.find(filter);
     }
-    catch(err){
-        res.status(500).json({message : 'Server error'});
-    }
+
+    res.status(200).json(movies);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
 };
+
+// exports.getAllMovies = async (req, res) => {
+//     try {
+//         const genre = req.query.genre;
+//         const language = req.query.language;
+
+//         const filter = {};   
+//         if (genre) filter.genre = genre; 
+//         if (language) filter.language = language;
+
+//         const movies = await Movie.find(filter); 
+//         res.status(200).json(movies);
+//     }
+//     catch(err){
+//         res.status(500).json({message : 'Server error'});
+//     }
+// };
 
 
 exports.getMovieById = async (req, res) => {
