@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
-import Header from "../Components/Header";
+import React, { useEffect, useState } from "react";
+import Header from "../Components/header";
 import Navbar from "../Components/navbar";
-import MovieList from "../Components/Movielist";
-import kanappa from "../assets/kanappa.jpg";
-import kubera from "../assets/kubera.jpeg";
+import MovieList from "../Components/movielist";
+
 import jw from "../assets/jw.jpg";
+import szp from "../assets/szp.jpg";
+import kubera from "../assets/kubera.jpeg";
 import devara from "../assets/devara.webp";
 import sv from "../assets/sv.avif";
-import szp from "../assets/szp.jpg";
-import "../App.css";
+import kanappa from "../assets/kanappa.jpg";
 
 function Home() {
   const [selectedLocation, setSelectedLocation] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [movies, setMovies] = useState([]);
 
   const posterMap = {
@@ -24,26 +25,29 @@ function Home() {
   };
 
   useEffect(() => {
-    const url = selectedLocation
-      ? `http://localhost:5000/api/movies?location=${selectedLocation}`
-      : `http://localhost:5000/api/movies`; //no filter → get all movies
+    let url = `http://localhost:5000/api/movies`;
+    const params = [];
+    if (selectedLocation) params.push(`location=${selectedLocation}`);
+    url += params.length > 0 ? `?${params.join("&")}` : "";
 
-    if (url) {
-      fetch(`http://localhost:5000/api/movies?location=${selectedLocation}`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("Fetched movies:", data);
-          setMovies(data);
-        })
-        .catch((err) => console.error(err));
-    }
-  }, [selectedLocation]);
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        const filteredMovies = data.filter((movie) =>
+          movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setMovies(filteredMovies);
+      })
+      .catch((err) => console.error(err));
+  }, [selectedLocation, searchTerm]);
 
   return (
     <div style={{ backgroundColor: "#0f0f00", color: "#eeeeee" }}>
       <Header
         selectedLocation={selectedLocation}
         onLocationChange={setSelectedLocation}
+        searchTerm={searchTerm}
+        onSearchTermChange={setSearchTerm}
       />
       <Navbar />
 
@@ -53,7 +57,7 @@ function Home() {
             <MovieList
               key={movie._id}
               {...movie}
-               id={movie._id} 
+              id={movie._id}
               poster={posterMap[movie.title]}
             />
           ))}

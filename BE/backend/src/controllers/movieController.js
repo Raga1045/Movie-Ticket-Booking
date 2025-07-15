@@ -5,11 +5,14 @@ const Showtime = require('../models/showtimes');
 
 exports.getAllMovies = async (req, res) => {
   try {
-    const { genre, language, location } = req.query;
+    const { genre, language, location , title} = req.query;
 
     const filter = {};
     if (genre) filter.genre = genre;
     if (language) filter.language = language;
+    if (title) {
+      filter.title = { $regex: new RegExp(title, 'i') }; // Case-insensitive search
+    }
 
     let movies;
 

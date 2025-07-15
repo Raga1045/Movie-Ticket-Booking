@@ -1,23 +1,44 @@
-import React, { useState } from 'react'; //useState - you want your input boxes to remember what the user types
+import React, { useState } from 'react';
 import './Header.css';
 import Logo from '../assets/cineverse.jpg';
 
-function Header({ selectedLocation, onLocationChange }){ // onLocationChange - a prop - this a callback that the parent app provides
-      const [locationInput, setLocationInput] = useState('');
+function Header({ selectedLocation, onLocationChange, searchTerm, onSearchTermChange }) {
+  const [locationInput, setLocationInput] = useState(selectedLocation || '');
+  const [movieInput, setMovieInput] = useState(searchTerm || '');
 
-  const handleSearch = () => {
+  const handleLocationSearch = () => {
     onLocationChange(locationInput);
   };
-    const [search, setSearch] = useState('');
 
-    return (
-        <div className="head">
-            <img src={Logo} className='cine-img'/> 
-            <input className="location-input" placeholder='location' value={locationInput} onChange={(e) => setLocationInput(e.target.value)} />
-            <button className='h-btn' onClick={handleSearch}>Search</button>
-            <input className="search-input" placeholder='search your movie' value={search} onChange={(e) => setSearch(e.target.value)} />
-        </div>
-    )
+  const handleMovieSearch = () => {
+    onSearchTermChange(movieInput);
+  };
+
+  return (
+    <div className="head">
+      <img src={Logo} className="cine-img" />
+
+      <input
+        className="location-input"
+        placeholder="location"
+        value={locationInput}
+        onChange={(e) => setLocationInput(e.target.value)}
+      />
+      <button className="h-btn" onClick={handleLocationSearch}>
+        Search
+      </button>
+
+      <input
+        className="search-input"
+        placeholder="search your movie"
+        value={movieInput}
+        onChange={(e) => setMovieInput(e.target.value)}
+      />
+      <button className="h-btn" onClick={handleMovieSearch}>
+        Search
+      </button>
+    </div>
+  );
 }
 
 export default Header;
