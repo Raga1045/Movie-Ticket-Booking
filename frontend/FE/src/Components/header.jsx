@@ -14,7 +14,7 @@ function Header({ selectedLocation, onLocationChange }){ // onLocationChange - a
         <div className="head">
             <img src={Logo} className='cine-img'/> 
             <input className="location-input" placeholder='location' value={locationInput} onChange={(e) => setLocationInput(e.target.value)} />
-            <button onClick={handleSearch}>Search</button>
+            <button className='h-btn' onClick={handleSearch}>Search</button>
             <input className="search-input" placeholder='search your movie' value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
     )
