@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const movieSchema = new mongoose.Schema({
     title : {type: String, required: true},
     description: String,
-    duration: Number,
+    duration: String,
     genre: [String], // means array of strings
     releaseDate: Date,
     language: String,

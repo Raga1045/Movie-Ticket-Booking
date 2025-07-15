@@ -7,6 +7,15 @@ import '../App.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 // import './MovieReview.css'; // Optional: for styling
 
+
+const formatDate = (date) => {
+  return new Date(date).toLocaleDateString('en-IN', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  });
+};
+
 function MovieReview() {
 
   const navigate = useNavigate();
@@ -21,6 +30,7 @@ function MovieReview() {
     return <p>Movie not found!</p>;
   }
 
+  console.log(movie)
   return (
 
     <div>
@@ -34,7 +44,7 @@ function MovieReview() {
           <h1 style={{fontSize:"50px",color:"#00adb5"}}>{movie.title}</h1>
           <p style={{fontSize:"24px"}}><strong style={{color:"#00adb5"}}>Genre:</strong> {movie.genre}</p>
           <p style={{fontSize:"24px"}}><strong style={{color:"#00adb5"}}>Language:</strong> {movie.lang}</p>
-          <p style={{fontSize:"24px"}}><strong style={{color:"#00adb5"}}>Release Date:</strong> {movie.releaseDate}</p>
+          <p style={{fontSize:"24px"}}><strong style={{color:"#00adb5"}}>Release Date:</strong> {formatDate(movie.releaseDate)}</p>
           <p style={{fontSize:"24px"}}><strong style={{color:"#00adb5"}}>Duration:</strong> {movie.duration}</p>
           <p style={{fontSize:"24px"}}><strong style={{color:"#00adb5"}}>About Movie:</strong> {movie.description}</p>
           <button className="book-now-btn" onClick={handle}>BOOK NOW</button>
