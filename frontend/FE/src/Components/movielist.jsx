@@ -1,27 +1,29 @@
 import './Movielist.css';
 import { useNavigate } from 'react-router-dom';
 
-function movielist({id,poster , title , lang,genre,duration,releaseDate,description,cast,reviews,rating}){
+function Movielist({id,poster , title , lang,genre,duration,releaseDate,description,cast,reviews,rating}){
      const navigate = useNavigate();
 
   const handleBookNow = () => {
-    navigate(`/movie/${id}`, {
-      state: {
-        movie: {
-          id,
-          poster,
-          title,
-          lang,
-          genre,
-          duration,
-          rating,
-          releaseDate,
-          description,
-          cast,
-          reviews
-        }
-      }
-    });
+    navigate(`/movie/${id}`
+    //   , {
+    //   state: {
+    //     movie: {
+    //       id,
+    //       poster,
+    //       title,
+    //       lang,
+    //       genre,
+    //       duration,
+    //       rating,
+    //       releaseDate,
+    //       description,
+    //       cast,
+    //       reviews
+    //     }
+    //   }
+    // }
+  );
   };
     
     return(
@@ -36,4 +38,4 @@ function movielist({id,poster , title , lang,genre,duration,releaseDate,descript
     );
 }
 
-export default movielist;
+export default Movielist;

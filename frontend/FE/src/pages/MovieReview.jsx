@@ -4,9 +4,10 @@ import Navbar from '../Components/navbar';
 // src/pages/MovieReview.jsx
 
 import '../App.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 // import './MovieReview.css'; // Optional: for styling
 
+import React, { useState, useEffect } from 'react';
 
 const formatDate = (date) => {
   return new Date(date).toLocaleDateString('en-IN', {
@@ -17,14 +18,24 @@ const formatDate = (date) => {
 };
 
 function MovieReview() {
-
+const {id} = useParams();
   const navigate = useNavigate();
+const [movie,setMovie] = useState(null);
+
+useEffect(() => {
+  console.log('Movie ID:', id);
+  fetch(`http://localhost:5000/api/movies/${id}`)
+  .then(res => {
+    if(!res.ok) throw new Error('Failed to fecth movie');
+    return res.json();
+  })
+  .then(data => setMovie(data))
+  .catch(err => console.error(err));
+}, [id]);
 
   const handle=()=>{
-     navigate(  `/showtime`  ,{state:{movie}})
+     navigate( `/showtime/${id}` )
   };
-  const location = useLocation();
-  const movie = location.state?.movie;
 
   if (!movie) {
     return <p>Movie not found!</p>;

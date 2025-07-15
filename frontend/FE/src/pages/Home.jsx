@@ -53,6 +53,7 @@ function Home() {
             <MovieList
               key={movie._id}
               {...movie}
+               id={movie._id} 
               poster={posterMap[movie.title]}
             />
           ))}

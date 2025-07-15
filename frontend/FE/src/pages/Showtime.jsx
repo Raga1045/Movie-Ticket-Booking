@@ -1,44 +1,79 @@
 import { useLocation } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useParams} from 'react-router-dom';
 
 function Showtime() {
-  const location = useLocation();
-  const movie = location.state?.movie;
+  // const location = useLocation();
+  // const movie = location.state?.movie;
 
-  const dates = ['Jul 11', 'Jul 12', 'Jul 13', 'Jul 14'];
+  // const dates = ['Jul 11', 'Jul 12', 'Jul 13', 'Jul 14'];
 
-  const theatreData = {
-    Kannappa: [
-      { name: 'PVR Cinemas', times: ['10:00 AM', '1:00 PM', '4:00 PM'] },
-      { name: 'Asian Cinemas', times: ['11:00 AM', '2:00 PM', '5:00 PM'] }
-    ],
-    Kubera: [
-      { name: 'INOX Banjara Hills', times: ['9:00 AM', '12:00 PM', '6:00 PM'] },
-      { name: 'GVK One Mall', times: ['10:30 AM', '1:30 PM', '4:30 PM'] }
-    ],
-    Sitaare: [
-      { name: 'INOX Banjara Hills', times: ['9:00 AM', '12:00 PM', '6:00 PM'] },
-      { name: 'GVK One Mall', times: ['10:30 AM', '1:30 PM', '4:30 PM'] }
-    ],
-    Jurassic: [
-      { name: 'INOX Banjara Hills', times: ['9:00 AM', '12:00 PM', '6:00 PM'] },
-      { name: 'GVK One Mall', times: ['10:30 AM', '1:30 PM', '4:30 PM'] }
-    ],
-    Devara: [
-      { name: 'INOX Banjara Hills', times: ['9:00 AM', '12:00 PM', '6:00 PM'] },
-      { name: 'GVK One Mall', times: ['10:30 AM', '1:30 PM', '4:30 PM'] }
-    ],
-    Sankranthi: [
-      { name: 'INOX Banjara Hills', times: ['9:00 AM', '12:00 PM', '6:00 PM'] },
-      { name: 'GVK One Mall', times: ['10:30 AM', '1:30 PM', '4:30 PM'] }
-    ]
-    // Add more as needed
-  };
+  // const theatreData = {
+  //   Kannappa: [
+  //     { name: 'PVR Cinemas', times: ['10:00 AM', '1:00 PM', '4:00 PM'] },
+  //     { name: 'Asian Cinemas', times: ['11:00 AM', '2:00 PM', '5:00 PM'] }
+  //   ],
+  //   Kubera: [
+  //     { name: 'INOX Banjara Hills', times: ['9:00 AM', '12:00 PM', '6:00 PM'] },
+  //     { name: 'GVK One Mall', times: ['10:30 AM', '1:30 PM', '4:30 PM'] }
+  //   ],
+  //   Sitaare: [
+  //     { name: 'INOX Banjara Hills', times: ['9:00 AM', '12:00 PM', '6:00 PM'] },
+  //     { name: 'GVK One Mall', times: ['10:30 AM', '1:30 PM', '4:30 PM'] }
+  //   ],
+  //   Jurassic: [
+  //     { name: 'INOX Banjara Hills', times: ['9:00 AM', '12:00 PM', '6:00 PM'] },
+  //     { name: 'GVK One Mall', times: ['10:30 AM', '1:30 PM', '4:30 PM'] }
+  //   ],
+  //   Devara: [
+  //     { name: 'INOX Banjara Hills', times: ['9:00 AM', '12:00 PM', '6:00 PM'] },
+  //     { name: 'GVK One Mall', times: ['10:30 AM', '1:30 PM', '4:30 PM'] }
+  //   ],
+  //   Sankranthi: [
+  //     { name: 'INOX Banjara Hills', times: ['9:00 AM', '12:00 PM', '6:00 PM'] },
+  //     { name: 'GVK One Mall', times: ['10:30 AM', '1:30 PM', '4:30 PM'] }
+  //   ]
+  //   // Add more as needed
+  // };
 
-  const theatres = theatreData[movie?.title] || [];
+  // const theatres = theatreData[movie?.title] || [];
+const { id } = useParams();
+  const [theatres, setTheatres] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [dates, setDates] = useState([]);
+  const [movie, setMovie] = useState(null);
 
-  if (!movie) {
-    return <p>Movie not found!</p>;
-  }
+   useEffect(() => {
+    fetch(`http://localhost:5000/api/movies/${id}`)
+      .then(res => res.json())
+      .then(data => setMovie(data))
+      .catch(err => console.error(err));
+  }, [id]);
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/api/showtimes/movie/${id}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch showtimes');
+        return res.json();
+      })
+      .then(data => {
+        setDates(data.dates || []);
+        setTheatres(data.theatres || []);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [id]);
+
+   if (!movie) return <p>Loading movie info...</p>;
+  if (loading) return <p>Loading showtimes...</p>;
+  if (error) return <p>{error}</p>;
+
+  
 
   return (
     <div className="showtime-container" style={{ padding: '20px' }}>
