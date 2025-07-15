@@ -174,4 +174,37 @@ useEffect(() => {
     </div>    */}
 
 
-   
+   // const location = useLocation();
+  // const movie = location.state?.movie;
+
+  // const dates = ['Jul 11', 'Jul 12', 'Jul 13', 'Jul 14'];
+
+  // const theatreData = {
+  //   Kannappa: [
+  //     { name: 'PVR Cinemas', times: ['10:00 AM', '1:00 PM', '4:00 PM'] },
+  //     { name: 'Asian Cinemas', times: ['11:00 AM', '2:00 PM', '5:00 PM'] }
+  //   ],
+  //   Kubera: [
+  //     { name: 'INOX Banjara Hills', times: ['9:00 AM', '12:00 PM', '6:00 PM'] },
+  //     { name: 'GVK One Mall', times: ['10:30 AM', '1:30 PM', '4:30 PM'] }
+  //   ],
+  //   Sitaare: [
+  //     { name: 'INOX Banjara Hills', times: ['9:00 AM', '12:00 PM', '6:00 PM'] },
+  //     { name: 'GVK One Mall', times: ['10:30 AM', '1:30 PM', '4:30 PM'] }
+  //   ],
+  //   Jurassic: [
+  //     { name: 'INOX Banjara Hills', times: ['9:00 AM', '12:00 PM', '6:00 PM'] },
+  //     { name: 'GVK One Mall', times: ['10:30 AM', '1:30 PM', '4:30 PM'] }
+  //   ],
+  //   Devara: [
+  //     { name: 'INOX Banjara Hills', times: ['9:00 AM', '12:00 PM', '6:00 PM'] },
+  //     { name: 'GVK One Mall', times: ['10:30 AM', '1:30 PM', '4:30 PM'] }
+  //   ],
+  //   Sankranthi: [
+  //     { name: 'INOX Banjara Hills', times: ['9:00 AM', '12:00 PM', '6:00 PM'] },
+  //     { name: 'GVK One Mall', times: ['10:30 AM', '1:30 PM', '4:30 PM'] }
+  //   ]
+  //   // Add more as needed
+  // };
+
+  // const theatres = theatreData[movie?.title] || [];

@@ -1,0 +1,42 @@
+.showtime-container{
+    padding: 30px;
+
+}
+
+.Sdate-btn{
+    margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #00adb5;
+  border: none;
+  color: #eeeeee;
+  font-weight: normal;
+  font-size: 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  height: 40px;
+  width: 130px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 20px;
+}
+
+.time-btn{
+    margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #00adb5;
+  border: none;
+  color: #eeeeee;
+  font-weight: normal;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  height: 35px;
+  width: 110px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 20px;
+}
+
+.theatre-block {
+    padding: 10px;
+    border-radius: 10px;
+     border: 1.5px solid white;
+}
