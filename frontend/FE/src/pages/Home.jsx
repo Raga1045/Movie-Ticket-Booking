@@ -9,6 +9,7 @@ import kubera from "../assets/kubera.jpeg";
 import devara from "../assets/devara.webp";
 import sv from "../assets/sv.avif";
 import kanappa from "../assets/kanappa.jpg";
+import RRR from "../assets/RRR.jpg";
 
 function Home() {
   const [selectedLocation, setSelectedLocation] = useState("");
@@ -22,6 +23,7 @@ function Home() {
     Devara: devara,
     "Sankrantiki Vastunnam": sv,
     "Sitaare Zameen Par": szp,
+    RRR:RRR
   };
 
   useEffect(() => {
