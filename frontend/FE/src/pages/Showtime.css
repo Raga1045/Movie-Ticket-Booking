@@ -17,9 +17,9 @@
 .Sdate-btn{
     margin-top: 15px;
   padding: 10px 20px;
-  background-color: #00adb5;
+  background-color: #eeeeee;
   border: none;
-  color: #eeeeee;
+  color: #1f1f11;
   font-weight: normal;
   font-size: 18px;
   border-radius: 20px;
@@ -28,6 +28,11 @@
   width: 130px;
   font-family: Arial, Helvetica, sans-serif;
   margin-bottom: 20px;
+}
+
+.Sdate-btn:focus{
+  background-color: #00adb5;
+  color: #eeeeee;
 }
 
 .time-btn{
