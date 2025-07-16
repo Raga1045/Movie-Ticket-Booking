@@ -14,6 +14,7 @@ html, body, #root {
 }
 
 .movie-review {
+  margin-top: 0px;
   padding: 20px;
   color: #eeeeee;
   background-color: #0b0b0b;
@@ -26,7 +27,7 @@ html, body, #root {
   gap: 30px;
   margin-bottom: 30px;
    display: flex;
-    padding-left:350px;
+    padding-left:310px;
     
 }
 
@@ -55,7 +56,7 @@ html, body, #root {
 }
 
 .movie-cast {
-  margin-bottom: 30px;
+  margin-bottom: 0px;
 }
 
 .cast-list {
@@ -82,7 +83,7 @@ html, body, #root {
 }
 
 
-/* Login page */
+/*Sign Up page */
 .page {
   display: flex;
   justify-content: center;
@@ -101,7 +102,7 @@ html, body, #root {
 
 .signUp {
   color: #00adb5;
-  font-size: 32px;
+  font-size: 30px;
   font-weight: bold;
   font-family: 'Times New Roman', Times, serif;
   margin: 10px;
@@ -115,7 +116,8 @@ html, body, #root {
      padding:20px 10px;
      font-size: 18px;
      width:290px;
-     height: 7px;
+     height: 6px;
+     color: #eeeeee;
 }
 
 .input {
@@ -142,7 +144,7 @@ html, body, #root {
   border: 2px solid #eeeeee;
 }
 
-/*Login page*/
+/*Sign page*/
 
 
 

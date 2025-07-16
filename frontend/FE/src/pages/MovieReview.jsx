@@ -1,5 +1,6 @@
 import Header from '../Components/header';
 import Navbar from '../Components/navbar';
+import Logo from '../assets/cineverse.jpg';
 
 // src/pages/MovieReview.jsx
 
@@ -45,7 +46,9 @@ useEffect(() => {
   return (
 
     <div>
-      <Header/>
+        <img src={Logo} className="cine-img" style ={{height : '150px', paddingLeft : '100px'}} />
+{/*       
+      <Header/> */}
       <Navbar/>
     <div className="movie-review">
       <div className="movie-details">

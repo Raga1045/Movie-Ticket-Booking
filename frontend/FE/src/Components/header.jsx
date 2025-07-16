@@ -47,6 +47,9 @@ function Header({ selectedLocation, onLocationChange, searchTerm, onSearchTermCh
       {/* <button className="h-btn" onClick={handleMovieSearch}>
         Search
       </button> */}
+
+      <a href="/signup" className="auth-link">Signup</a>
+<a href="/login" className="auth-link">Login</a>
     </div>
   );
 }

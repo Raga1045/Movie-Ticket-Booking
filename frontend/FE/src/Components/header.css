@@ -50,3 +50,13 @@
     object-fit: contain;
     width:350px;
 }
+
+.auth-link {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #00adb5; 
+}
+
+.auth-link:hover {
+  color : #eeeeee;
+}

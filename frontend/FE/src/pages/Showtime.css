@@ -3,6 +3,17 @@
 
 }
 
+.showtime-header{
+  display: flex;
+  gap : 120px;
+  align-items: center;
+  margin-top: 20px;
+  height: 30px;
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-bottom: 0px;
+}
+
 .Sdate-btn{
     margin-top: 15px;
   padding: 10px 20px;

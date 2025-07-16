@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { useParams} from 'react-router-dom';
-
+import Logo from '../assets/cineverse.jpg';
 import './Showtime.css';
 
 function Showtime() {
@@ -45,14 +45,21 @@ const { id } = useParams();
   
 
   return (
-    <div className="showtime-container">
+    <>
+   
 
       <h2 style={{ textAlign: 'center' }}>
-        <span style={{color : '#00adb5'}}>Movie Name:</span> <span style={{ fontWeight: 'normal',color:"#eeeeee" }}>{movie.title}</span>
+         <div className="showtime-header">
+          <img src={Logo} className="cine-img" />
+       <div>
+         <span style={{color : '#00adb5'}}>Movie Name:</span> <span style={{ fontWeight: 'normal',color:"#eeeeee" }}>{movie.title}</span>
+       </div>
+        </div>
       </h2>
 
-      
-      <div style={{ display: 'flex', gap: '15px', marginTop: '15px', justifyContent: 'center' }}>
+       <div className="showtime-container">
+
+      <div style={{ display: 'flex', gap: '15px', marginTop: '0px', justifyContent: 'center' }}>
         {dates.map((date, index) => (
           <button key={index} className="Sdate-btn">{date}</button>
         ))}
@@ -73,6 +80,7 @@ const { id } = useParams();
       </div>
 
     </div>
+    </>
   );
 }
 
