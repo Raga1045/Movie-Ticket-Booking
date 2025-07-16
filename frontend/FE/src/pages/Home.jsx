@@ -67,7 +67,11 @@ function Home() {
       ) : (
         <p style={{ color: "#fff" }}>No movies found for this location.</p>
       )}
+
+      
     </div>
+
+    
   );
 }
 
