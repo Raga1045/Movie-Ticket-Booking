@@ -23,20 +23,30 @@ function Header({ selectedLocation, onLocationChange, searchTerm, onSearchTermCh
         placeholder="location"
         value={locationInput}
         onChange={(e) => setLocationInput(e.target.value)}
+        onKeyDown={(e) => {
+    if (e.key === 'Enter') {
+      handleLocationSearch();
+    }
+  }}
       />
-      <button className="h-btn" onClick={handleLocationSearch}>
+      {/* <button className="h-btn" onClick={handleLocationSearch}>
         Search
-      </button>
+      </button> */}
 
       <input
         className="search-input"
         placeholder="search your movie"
         value={movieInput}
         onChange={(e) => setMovieInput(e.target.value)}
+        onKeyDown={(e) => {
+    if (e.key === 'Enter') {
+      handleMovieSearch();
+    }
+  }}
       />
-      <button className="h-btn" onClick={handleMovieSearch}>
+      {/* <button className="h-btn" onClick={handleMovieSearch}>
         Search
-      </button>
+      </button> */}
     </div>
   );
 }
