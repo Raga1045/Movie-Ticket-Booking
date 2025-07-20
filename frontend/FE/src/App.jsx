@@ -22,7 +22,7 @@ function App() {
              <Route path="/seatselection" element={<SeatSelection/>}/>
              <Route path="/signup" element={<SignUp/>}/>
              <Route path="/login" element={<Login/>}/>
-             <Route path="/payment" element={<Payment/>}/>
+             <Route path="/payment/:id" element={<Payment/>}/>
           </Routes>
         </BR>
      </div>

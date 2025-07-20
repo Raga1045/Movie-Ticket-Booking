@@ -44,22 +44,7 @@ exports.getAllMovies = async (req, res) => {
   }
 };
 
-// exports.getAllMovies = async (req, res) => {
-//     try {
-//         const genre = req.query.genre;
-//         const language = req.query.language;
 
-//         const filter = {};   
-//         if (genre) filter.genre = genre; 
-//         if (language) filter.language = language;
-
-//         const movies = await Movie.find(filter); 
-//         res.status(200).json(movies);
-//     }
-//     catch(err){
-//         res.status(500).json({message : 'Server error'});
-//     }
-// };
 
 
 exports.getMovieById = async (req, res) => {

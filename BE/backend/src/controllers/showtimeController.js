@@ -32,7 +32,7 @@ exports.getShowtimesForMovie = async (req, res) => {
          console.log('Requested movieId:', movieId);
 
         const showtimes = await Showtime.find({ movie : movieId}).populate('theatre');
-         
+            //gets all the showtimes for a movie with the given id
 
         if(!showtimes.length) {
             console.log(' No showtimes found for this movie.');
@@ -42,75 +42,52 @@ exports.getShowtimesForMovie = async (req, res) => {
         const grouped = {};
 
         showtimes.forEach(st => {
+            //for each showtime format the date
             const dateStr = st.startTime.toLocaleDateString('en-US',{
                 month : 'short',
                 day: '2-digit'
             });
 
+            //find the theatre name
             const theatreName = st.theatre.name;
+            //format the time
                  const timeStr = st.startTime.toLocaleTimeString('en-US',{
                 hour : 'numeric',
                 minute: '2-digit',
             });
             
+            //it checks if that date is already there or not if not there then creates an empty object
             if(!grouped[dateStr]){
                 grouped[dateStr] = {};
             }
 
+            //it checks for the theatre
             if(!grouped[dateStr][theatreName]){
                 grouped[dateStr][theatreName] = [];
             }
 
+            //finally pushes the time to the theatre on the particular date
             grouped[dateStr][theatreName].push(timeStr);
         });
 
-        const dates = Object.keys(grouped);
+        const dates = Object.keys(grouped); // so dates is just an array of all unique date strings you built keys for
 
-        const showtimesByDate = {};
+        const showtimesByDate = {}; // this object will hold the final formatted version
+
         dates.forEach(date => {
             const theatres = [];
-            for(const[theatreName, times] of Object.entries(grouped[date])){
-                theatres.push({ name: theatreName, times});
+            
+            for(const[theatreName, times] of Object.entries(grouped[date])){ //Object.entries(someObject) converts an object’s keys and values into an array of [key, value] pairs.
+                theatres.push({ name: theatreName, times}); //each theatre is an object with name and times
             }
 
+            
             showtimesByDate[date] = theatres;
         });
 
         console.log('Final response:', {dates, showtimesByDate});
         res.status(200).json({ dates, showtimesByDate});
 
-        // const datesSet = new Set();
-        // showtimes.forEach(st => {
-        //     const dateStr = st.startTime.toLocaleDateString('en-US',{
-        //         month : 'short',
-        //         day: '2-digit'
-        //     });
-        //     datesSet.add(dateStr);
-        // })
-
-        // const dates = Array.from(datesSet);
-
-        // const theatreMap = new Map();
-
-        // showtimes.forEach(st=> {
-        //     const theatreName = st.theatre.name;
-
-        //     const timeStr = st.startTime.toLocaleTimeString('en-US',{
-        //         hour : 'numeric',
-        //         minute: '2-digit',
-        //     });
-
-        //     if(!theatreMap.has(theatreName)){
-        //         theatreMap.set(theatreName, []);
-        //     }
-
-        //     theatreMap.get(theatreName).push(timeStr);
-        // })
-
-        // const theatres = Array.from(theatreMap.entries()).map(([name, times]) => ({name, times}));
-
-        // console.log('Final response:', { dates, theatres });
-        // res.status(200).json({dates, theatres});
     }
     catch(err){
         console.error(err);

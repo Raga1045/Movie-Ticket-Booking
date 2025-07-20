@@ -44,6 +44,7 @@ catch(err){
 };
 
 
+
 exports.getUserBookings = async (req, res) => {
     try {
         const userId = req.user._id;
@@ -64,8 +65,11 @@ exports.getUserBookings = async (req, res) => {
 };
 
 
+
+
 exports.getBookingsById = async (req, res) => {
     try {
+         console.log('Incoming req.params.id:', req.params.id);
         const booking = await Booking.findById(req.params.id).populate({
             path : 'showTime',
             populate: [
@@ -73,6 +77,10 @@ exports.getBookingsById = async (req, res) => {
                 {path : 'theatre'}
             ]
         });
+        console.log('Booking:', booking);
+console.log('Booking.user:', booking.user);
+console.log('Req.user._id:', req.user._id);
+
 
         if(!booking) return res.status(404).json({message : 'Booking not found'});
 
@@ -81,12 +89,17 @@ exports.getBookingsById = async (req, res) => {
         }
 
         res.json(booking);
+       
+
 
     }
     catch(err) {
         res.status(500).json({message : 'Server error'});
     }
 };
+
+
+
 
 exports.cancelBooking = async (req, res) => {
     try {
