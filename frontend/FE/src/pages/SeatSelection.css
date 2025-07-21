@@ -1,0 +1,41 @@
+.seat-selection-container {
+  text-align: center;
+  padding: 20px;
+  color: white;
+}
+
+.seats-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 40px);
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.seat {
+  background-color: #444;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.seat.booked {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.seat.selected {
+  background-color: #28a745;
+}
+
+.book-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}

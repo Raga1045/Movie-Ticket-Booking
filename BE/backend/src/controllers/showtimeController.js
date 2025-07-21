@@ -29,71 +29,67 @@ exports.getShowtimeById = async (req, res) => {
 exports.getShowtimesForMovie = async (req, res) => {
     try {
         const movieId = req.params.id;
-         console.log('Requested movieId:', movieId);
+        console.log('Requested movieId:', movieId);
 
-        const showtimes = await Showtime.find({ movie : movieId}).populate('theatre');
-            //gets all the showtimes for a movie with the given id
+        const showtimes = await Showtime.find({ movie: movieId }).populate('theatre');
 
-        if(!showtimes.length) {
-            console.log(' No showtimes found for this movie.');
-            return res.status(404).json({ message : 'No showtimes found for this movie'})
+        if (!showtimes.length) {
+            console.log('No showtimes found for this movie.');
+            return res.status(404).json({ message: 'No showtimes found for this movie' });
         }
 
         const grouped = {};
 
         showtimes.forEach(st => {
-            //for each showtime format the date
-            const dateStr = st.startTime.toLocaleDateString('en-US',{
-                month : 'short',
-                day: '2-digit'
+            const dateStr = st.startTime.toLocaleDateString('en-US', {
+                month: 'short',
+                day: '2-digit',
             });
 
-            //find the theatre name
             const theatreName = st.theatre.name;
-            //format the time
-                 const timeStr = st.startTime.toLocaleTimeString('en-US',{
-                hour : 'numeric',
+
+            const timeStr = st.startTime.toLocaleTimeString('en-US', {
+                hour: 'numeric',
                 minute: '2-digit',
             });
-            
-            //it checks if that date is already there or not if not there then creates an empty object
-            if(!grouped[dateStr]){
+
+            if (!grouped[dateStr]) {
                 grouped[dateStr] = {};
             }
 
-            //it checks for the theatre
-            if(!grouped[dateStr][theatreName]){
+            if (!grouped[dateStr][theatreName]) {
                 grouped[dateStr][theatreName] = [];
             }
 
-            //finally pushes the time to the theatre on the particular date
-            grouped[dateStr][theatreName].push(timeStr);
+            // Push time and showtimeId
+            grouped[dateStr][theatreName].push({
+                time: timeStr,
+                showtimeId: st._id
+            });
         });
 
-        const dates = Object.keys(grouped); // so dates is just an array of all unique date strings you built keys for
-
-        const showtimesByDate = {}; // this object will hold the final formatted version
+        const dates = Object.keys(grouped);
+        const showtimesByDate = {};
 
         dates.forEach(date => {
             const theatres = [];
-            
-            for(const[theatreName, times] of Object.entries(grouped[date])){ //Object.entries(someObject) converts an object’s keys and values into an array of [key, value] pairs.
-                theatres.push({ name: theatreName, times}); //each theatre is an object with name and times
+
+            for (const [theatreName, times] of Object.entries(grouped[date])) {
+                theatres.push({ name: theatreName, times }); // now times is array of objects { time, showtimeId }
             }
 
-            
             showtimesByDate[date] = theatres;
         });
 
-        console.log('Final response:', {dates, showtimesByDate});
-        res.status(200).json({ dates, showtimesByDate});
+        console.log('Final response:', { dates, showtimesByDate });
+        res.status(200).json({ dates, showtimesByDate });
 
-    }
-    catch(err){
+    } catch (err) {
         console.error(err);
-        res.status(500).json({message : 'Server error'});
+        res.status(500).json({ message: 'Server error' });
     }
 };
+
 
 
 exports.createShowtime = async (req, res) => {
@@ -151,3 +147,47 @@ exports.createShowtime = async (req, res) => {
         res.status(500).json({message : 'Internal Server Error'});
     }
 };
+
+// Book selected seats for a specific showtime
+exports.bookSeats = async (req, res) => {
+  try {
+    const showtimeId = req.params.id;
+    const { seats } = req.body; // Array of seat numbers like ['A1', 'A2']
+
+    const showtime = await Showtime.findById(showtimeId);
+    if (!showtime) {
+      return res.status(404).json({ message: 'Showtime not found' });
+    }
+
+    let alreadyBooked = [];
+
+    const updatedSeats = showtime.seats.map(seat => {
+      if (seats.includes(seat.seatNumber)) {
+        if (seat.isBooked) {
+          alreadyBooked.push(seat.seatNumber);
+        }
+        return { ...seat, isBooked: true };
+      }
+      return seat;
+    });
+
+    if (alreadyBooked.length) {
+      return res.status(400).json({
+        message: 'Some seats are already booked',
+        alreadyBooked
+      });
+    }
+
+    showtime.seats = updatedSeats;
+    await showtime.save();
+
+    res.status(200).json({
+      message: 'Seats booked successfully',
+      bookedSeats: seats
+    });
+  } catch (err) {
+    console.error('Booking error:', err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+

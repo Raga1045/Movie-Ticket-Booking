@@ -1,10 +1,12 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { useParams} from 'react-router-dom';
 import Logo from '../assets/cineverse.jpg';
 import './Showtime.css';
 
 function Showtime() {
+
+  const navigate = useNavigate();
   
 const { id } = useParams();
   //const [theatres, setTheatres] = useState([]);
@@ -109,7 +111,7 @@ const { id } = useParams();
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                       
                       {theatre.times.map((time, i) => (
-                        <button key={i} className="time-btn"> {time} </button>
+                        <button key={i} className="time-btn" onClick={() => navigate(`/seatselection/${Showtime._id}`)}> {time} </button>
                       ))}
 
                     </div>
