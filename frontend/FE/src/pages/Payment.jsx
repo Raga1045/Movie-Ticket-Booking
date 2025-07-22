@@ -1,6 +1,6 @@
 import './Payment.css';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 
 function Payment(){
@@ -10,7 +10,7 @@ function Payment(){
     //     time: '7:30 PM',
     //     theatre: 'PVR Cinemas'
     // };
-
+const navigate = useNavigate();
     const { id } = useParams();
     const [booking, setBooking] = useState(null);
 
@@ -42,6 +42,7 @@ function Payment(){
     }
 
     // const seats = ['A1','A2','A3'];
+   
      const ticketsPrice = 500;
      const convinienceFee = 66.08;
     // const total = ticketsPrice + convinienceFee;
@@ -50,59 +51,62 @@ function Payment(){
     const dateStr = startTime.toLocaleDateString('en-IN');
     const timeStr = startTime.toLocaleTimeString('en-IN', {hour:'2-digit', minute: '2-digit'});
 
-    // return(
+    return(
 
-    //     <div className='payment-main'>
+        <div className='payment-main'>
 
-    //         <div className='payment'>
-    //         <div className="confirm">Confirm booking</div>
+            <div className='payment'>
+            <div className="confirm">Confirm booking</div>
 
-    //         <div className="title">{booking.showTime.movie.title}</div>
+            <div className="title">{booking.showTime.movie.title}</div>
 
-    //        <div className='movie-detail'>
-    //          <span> {dateStr  } </span>
-    //          <span> {timeStr  } </span>
-    //          <span> {booking.showTime.theatre.name }</span>
-    //        </div>
+           <div className='movie-detail'>
+             <span> {dateStr  } </span>
+             <span> {timeStr  } </span>
+             <span> {booking.showTime.theatre.name }</span>
+           </div>
 
-    //         <div className='detailsPay'>Details</div>
+            <div className='detailsPay'>Details</div>
 
-    //         <div className='p-container'>
+            <div className='p-container'>
 
-    //            <div style={{display:'flex',justifyContent:'space-between', marginBottom:'14px'}}>
-    //             <span>Seats : </span>
-    //             <span>{booking.seats.join(', ')}</span>
-    //            </div>
+               <div style={{display:'flex',justifyContent:'space-between', marginBottom:'14px'}}>
+                <span>Seats : </span>
+                <span>{booking.seats.join(', ')}</span>
+               </div>
 
-    //             <div style={{display:'flex',justifyContent:'space-between', marginBottom:'14px'}}>
-    //                 <span>Ticket/s price : </span>
-    //                 <span>₹{ticketsPrice}</span>
-    //             </div>
+                <div style={{display:'flex',justifyContent:'space-between', marginBottom:'14px'}}>
+                    <span>Ticket/s price : </span>
+                    <span>₹{ticketsPrice}</span>
+                </div>
 
-    //             <div style={{display:'flex',justifyContent:'space-between', marginBottom:'14px'}}>
-    //                 <span>Convinience Fee :</span>
-    //                 <span> ₹{convinienceFee}</span>
-    //             </div>
+                <div style={{display:'flex',justifyContent:'space-between', marginBottom:'14px'}}>
+                    <span>Convinience Fee :</span>
+                    <span> ₹{convinienceFee}</span>
+                </div>
 
-    //         </div>
+            </div>
 
-    //         <div className='footer'>
+            <div className='footer'>
 
-    //             <div className='total'>
-    //                 <p style={{fontWeight:'bold', color:'#00adb5', marginBottom:'3px',fontSize:'18px'}}>Total</p>
-    //                 <p style={{fontWeight:'bold',marginTop: '4px',fontSize: '18px'}}>₹{booking.totalPrice}</p>
-    //             </div>
+                <div className='total'>
+                    <p style={{fontWeight:'bold', color:'#00adb5', marginBottom:'3px',fontSize:'18px'}}>Total</p>
+                    <p style={{fontWeight:'bold',marginTop: '4px',fontSize: '18px'}}>₹{booking.totalPrice}</p>
+                </div>
 
-    //             <div className='button'>
-    //                 <button className='continue' type='submit'>continue</button>
-    //             </div>
+                <div className='button'>
+                    <button className='continue' type='submit' onClick={() => {
+    alert('Booking successful!');
+     navigate('/');
+  }}>continue</button>
+                </div>
                 
-    //         </div>
-    //     </div>
+            </div>
+        </div>
 
-    //     </div>
+        </div>
       
-    // );
+    );
 };
 
 export default Payment;

@@ -41,10 +41,7 @@ exports.getShowtimesForMovie = async (req, res) => {
         const grouped = {};
 
         showtimes.forEach(st => {
-            const dateStr = st.startTime.toLocaleDateString('en-US', {
-                month: 'short',
-                day: '2-digit',
-            });
+           const dateStr = st.startTime.toISOString().split('T')[0];
 
             const theatreName = st.theatre.name;
 

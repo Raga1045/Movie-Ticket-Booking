@@ -14,7 +14,9 @@ const SeatSelection = () => {
   useEffect(() => {
     const fetchSeats = async () => {
       try {
+        
         const res = await axios.get(`http://localhost:5000/api/showtimes/${showtimeId}`);
+       
         setSeats(res.data.seats);
       } catch (error) {
         console.error("Failed to fetch seat data", error);
@@ -26,6 +28,7 @@ const SeatSelection = () => {
 
   // Handle seat selection/deselection
   const handleSeatClick = (seatNumber, isBooked) => {
+    console.log("Clicked seat:", seatNumber);
     if (isBooked) return; // Ignore clicks on booked seats
 
     if (selectedSeats.includes(seatNumber)) {
@@ -37,21 +40,36 @@ const SeatSelection = () => {
 
   // Book selected seats
   const handleBooking = async () => {
+
+    console.log("Selected seats:", selectedSeats);
     if (selectedSeats.length === 0) {
       alert("Please select at least one seat to book.");
       return;
     }
 
     try {
-      await axios.post(`http://localhost:5000/api/showtimes/${showtimeId}/book`, {
-        seats: selectedSeats,
-      });
+      const totalPrice = selectedSeats.length * 500 + 66.08;
 
-      alert("Seats booked successfully!");
-      setSelectedSeats([]);
+      const res = await axios.post(`http://localhost:5000/api/bookings`, {
+      showTimeId: showtimeId,
+      seats: selectedSeats,
+      totalPrice
+    }, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    console.log("Booking response:", res.data);
+
+    const bookingId = res.data.booking._id;
+
+
+      // alert("Seats booked successfully!");
+    navigate(`/payment/${bookingId}`)
       // Refresh seats to reflect booked status
-      const res = await axios.get(`http://localhost:5000/api/showtimes/${showtimeId}`);
-      setSeats(res.data.seats);
+      // const res = await axios.get(`http://localhost:5000/api/showtimes/${showtimeId}`);
+      // setSeats(res.data.seats);
     } catch (error) {
       console.error("Error booking seats", error);
       alert("Failed to book seats");
@@ -61,7 +79,7 @@ const SeatSelection = () => {
   return (
     <div className="seat-selection-container">
       <h2>Select Your Seats</h2>
-      <div className="seat-grid">
+      <div className="seats-grid">
         {seats.map(({ seatNumber, isBooked }) => (
           <div
             key={seatNumber}

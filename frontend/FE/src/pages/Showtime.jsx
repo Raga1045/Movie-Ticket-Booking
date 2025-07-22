@@ -69,7 +69,8 @@ const { id } = useParams();
         <div
           style={{ display: 'flex', gap: '15px', marginTop: '0px',justifyContent: 'center',flexWrap: 'wrap' }}>
           {dates.map((date, index) => (
-            <button key={index} className={`Sdate-btn ${selectedDate === date ? 'active' : ''}`} onClick={() => setSelectedDate(date)} > {date} </button>
+            <button key={index} className={`Sdate-btn ${selectedDate === date ? 'active' : ''}`} onClick={() => setSelectedDate(date)} >  {new Date(date).toLocaleDateString('en-IN',{ day: '2-digit',
+      month: 'short'})} </button>
           ))}
 
           {selectedDate && (
@@ -89,8 +90,8 @@ const { id } = useParams();
                     </h3>
 
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                      {theatre.times.map((time, i) => (
-                        <button key={i} className="time-btn"> {time} </button>
+                      {theatre.times.map((timeObj, i) => (
+                        <button key={i} className="time-btn" onClick={() => navigate(`/seatselection/${timeObj.showtimeId}`)}> {timeObj.time} </button>
                       ))}
                     </div>
 
@@ -110,9 +111,15 @@ const { id } = useParams();
                     <h3 style={{marginBottom: '10px', color: '#00adb5',fontSize: '20px' }}> {theatre.name} </h3>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                       
-                      {theatre.times.map((time, i) => (
-                        <button key={i} className="time-btn" onClick={() => navigate(`/seatselection/${Showtime._id}`)}> {time} </button>
-                      ))}
+                     {theatre.times.map((timeObj, i) => (
+  <button
+    key={i}
+    className="time-btn"
+    onClick={() => navigate(`/seatselection/${timeObj.showtimeId}`)}
+  >
+    {timeObj.time}
+  </button>
+))}
 
                     </div>
                   </div>
