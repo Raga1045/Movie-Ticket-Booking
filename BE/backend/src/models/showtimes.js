@@ -9,7 +9,8 @@ const showtimeSchema = new mongoose.Schema({
             seatNumber: String,
             isBooked: {type: Boolean, default: false}
         }
-    ]
+    ],
+    capacity: Number//added
 });
 
 module.exports = mongoose.model('Showtime', showtimeSchema);

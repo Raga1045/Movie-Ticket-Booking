@@ -9,39 +9,60 @@ const SeatSelection = () => {
 
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
+  const [seatsPerRow, setSeatsPerRow] = useState(10); // default
+  const [loading, setLoading] = useState(true); // optional loading state
 
-  // Fetch seat data for the showtime
+  // ✅ Helper to group seats row-wise
+  const getGroupedSeats = (allSeats, perRow) => {
+    const rows = [];
+    for (let i = 0; i < allSeats.length; i += perRow) {
+      rows.push(allSeats.slice(i, i + perRow));
+    }
+    return rows;
+  };
+
+  // ✅ Fetch seat data and capacity
   useEffect(() => {
     const fetchSeats = async () => {
       try {
-        
         const res = await axios.get(`http://localhost:5000/api/showtimes/${showtimeId}`);
-       
-        setSeats(res.data.seats);
+        const { seats: fetchedSeats, capacity } = res.data;
+
+        setSeats(fetchedSeats);
+
+        // Dynamically set seats per row
+        if (capacity >= 150) {
+          setSeatsPerRow(15);
+        } else if (capacity >= 120) {
+          setSeatsPerRow(12);
+        } else {
+          setSeatsPerRow(10);
+        }
+
+        setLoading(false);
+        console.log("Fetched capacity:", capacity);
       } catch (error) {
         console.error("Failed to fetch seat data", error);
+        setLoading(false);
       }
     };
 
     fetchSeats();
   }, [showtimeId]);
 
-  // Handle seat selection/deselection
+  // ✅ Handle seat click
   const handleSeatClick = (seatNumber, isBooked) => {
-    console.log("Clicked seat:", seatNumber);
-    if (isBooked) return; // Ignore clicks on booked seats
+    if (isBooked) return;
 
     if (selectedSeats.includes(seatNumber)) {
-      setSelectedSeats(selectedSeats.filter((seat) => seat !== seatNumber));
+      setSelectedSeats(prev => prev.filter(seat => seat !== seatNumber));
     } else {
-      setSelectedSeats([...selectedSeats, seatNumber]);
+      setSelectedSeats(prev => [...prev, seatNumber]);
     }
   };
 
-  // Book selected seats
+  // ✅ Handle booking
   const handleBooking = async () => {
-
-    console.log("Selected seats:", selectedSeats);
     if (selectedSeats.length === 0) {
       alert("Please select at least one seat to book.");
       return;
@@ -51,44 +72,40 @@ const SeatSelection = () => {
       const totalPrice = selectedSeats.length * 500 + 66.08;
 
       const res = await axios.post(`http://localhost:5000/api/bookings`, {
-      showTimeId: showtimeId,
-      seats: selectedSeats,
-      totalPrice
-    }, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    });
+        showTimeId: showtimeId,
+        seats: selectedSeats,
+        totalPrice
+      }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
 
-    console.log("Booking response:", res.data);
-
-    const bookingId = res.data.booking._id;
-
-
-      // alert("Seats booked successfully!");
-    navigate(`/payment/${bookingId}`)
-      // Refresh seats to reflect booked status
-      // const res = await axios.get(`http://localhost:5000/api/showtimes/${showtimeId}`);
-      // setSeats(res.data.seats);
+      const bookingId = res.data.booking._id;
+      navigate(`/payment/${bookingId}`);
     } catch (error) {
       console.error("Error booking seats", error);
       alert("Failed to book seats");
     }
   };
 
+  if (loading) return <div>Loading seat layout...</div>;
+
   return (
     <div className="seat-selection-container">
       <h2>Select Your Seats</h2>
       <div className="seats-grid">
-        {seats.map(({ seatNumber, isBooked }) => (
-          <div
-            key={seatNumber}
-            className={`seat 
-              ${isBooked ? "booked" : ""} 
-              ${selectedSeats.includes(seatNumber) ? "selected" : ""}`}
-            onClick={() => handleSeatClick(seatNumber, isBooked)}
-          >
-            {seatNumber}
+        {getGroupedSeats(seats, seatsPerRow).map((row, rowIndex) => (
+          <div className="seat-row" key={rowIndex}>
+            {row.map(({ seatNumber, isBooked }) => (
+              <div
+                key={seatNumber}
+                className={`seat ${isBooked ? "booked" : ""} ${selectedSeats.includes(seatNumber) ? "selected" : ""}`}
+                onClick={() => handleSeatClick(seatNumber, isBooked)}
+              >
+                {seatNumber}
+              </div>
+            ))}
           </div>
         ))}
       </div>

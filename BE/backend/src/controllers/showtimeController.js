@@ -18,7 +18,12 @@ exports.getShowtimeById = async (req, res) => {
         const showtime = await Showtime.findById(req.params.id).populate('movie theatre');
         if(!showtime) return res.status(404).json({message : 'Showtime not found'});
 
-        res.status(200).json(showtime);
+        //res.status(200).json(showtime); old
+
+        res.json({
+      seats: showtime.seats,
+      capacity: showtime.capacity, // Include this
+    });//added
     }
     catch(err){
         res.status(500).json({message : 'Server error'});
@@ -129,7 +134,8 @@ exports.createShowtime = async (req, res) => {
             movie: movieId,
             theatre: theatreId,
             startTime,
-            seats
+            seats,
+            capacity: totalSeats
         });
 
         await showtime.save();
