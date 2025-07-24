@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./seatSelection.css";
+import Logo from '../assets/cineverse.jpg';
 
 const SeatSelection = () => {
   const { id: showtimeId } = useParams();
@@ -11,6 +12,7 @@ const SeatSelection = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [seatsPerRow, setSeatsPerRow] = useState(10); // default
   const [loading, setLoading] = useState(true); // optional loading state
+  const [movieName, setMovieName] = useState(""); 
 
   // ✅ Helper to group seats row-wise
   const getGroupedSeats = (allSeats, perRow) => {
@@ -26,10 +28,13 @@ const SeatSelection = () => {
     const fetchSeats = async () => {
       try {
         const res = await axios.get(`http://localhost:5000/api/showtimes/${showtimeId}`);
-        const { seats: fetchedSeats, capacity } = res.data;
+        const { seats: fetchedSeats, capacity, movie } = res.data;
+
+         console.log("API data:", res.data);
+      console.log("Movie in API data:", res.data.movie);
 
         setSeats(fetchedSeats);
-
+        setMovieName(movie?.title || "");
         // Dynamically set seats per row
         if (capacity >= 150) {
           setSeatsPerRow(15);
@@ -92,9 +97,14 @@ const SeatSelection = () => {
   if (loading) return <div>Loading seat layout...</div>;
 
   return (
+    <>
+   <div className="showtime-header">
+     <img src={Logo} className="cine-img" alt="Cineverse Logo" />
+   </div>
     
+       <h1 style={{ textAlign: 'center', marginTop: '3px', color: '#00adb5', marginBottom: '10px', fontSize: '40px'}}>{movieName}</h1>
     <div className="seat-selection-container">
-      <h2>Select Your Seats</h2>
+      <h2 style={{marginTop: '0px', marginBottom: '8px'}}>Select Your Seats</h2>
       <br></br>
 
       <div className="seat-legend">
@@ -150,6 +160,7 @@ const SeatSelection = () => {
 
       
     </div>
+    </>
   );
 };
 

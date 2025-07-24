@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
 
 .seat-row {
@@ -67,7 +67,7 @@
   display: flex;
   justify-content: center;
   gap: 40px;
-  margin-top: 20px;
+  margin-top: 15px;
   color: #eeeeee;
   background-color: #111000; /* same as screenshot background */
   padding: 10px 0;

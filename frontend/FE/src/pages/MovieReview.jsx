@@ -47,8 +47,7 @@ useEffect(() => {
 
     <div>
         <img src={Logo} className="cine-img" style ={{height : '150px', paddingLeft : '100px'}} />
-{/*       
-      <Header/> */}
+
       <Navbar/>
     <div className="movie-review">
       <div className="movie-details">

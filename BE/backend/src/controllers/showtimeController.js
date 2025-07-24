@@ -16,13 +16,25 @@ exports.getAllShowtimes = async (req, res) => {
 exports.getShowtimeById = async (req, res) => {
     try {
         const showtime = await Showtime.findById(req.params.id).populate('movie theatre');
+
+           console.log("Populated showtime:", showtime);
+    console.log("Populated movie:", showtime.movie);
+
         if(!showtime) return res.status(404).json({message : 'Showtime not found'});
 
         //res.status(200).json(showtime); old
 
         res.json({
       seats: showtime.seats,
-      capacity: showtime.capacity, // Include this
+      capacity: showtime.capacity,
+      movie : {
+        title : showtime.movie.title,
+        _id: showtime.movie._id
+      },
+      theatre: {
+        name: showtime.theatre.name,
+        _id: showtime.theatre._id
+      } // Include this
     });//added
     }
     catch(err){
