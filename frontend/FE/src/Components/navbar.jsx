@@ -1,11 +1,13 @@
-import './navbar.css'
+import { Link } from 'react-router-dom';
+import './navbar.css';
+
 function navbar(){
      return(
        <div className="container">
            <div className='cont'>
-             <div className="tag">About Us</div>
-             <div className="tag">Contact Us</div>
-             <div className="tag"> Help</div>
+             <Link to='/about'><div className="tag">About Us</div></Link>
+             <Link to='/contact'><div className="tag">Contact Us</div></Link>
+             <Link to='/help'><div className="tag"> Help</div></Link>
            </div>
            <br></br>
            

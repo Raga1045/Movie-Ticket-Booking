@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import  {BrowserRouter as BR , Routes , Route} from "react-router-dom";
 
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Help from './pages/Help';
 import Home from "./pages/Home";
 import MovieReview from "./pages/MovieReview";
 import Showtime from "./pages/Showtime";
@@ -17,6 +20,9 @@ function App() {
         <BR>
           <Routes>
              <Route path="/" element={<Home/>}/>
+             <Route path="/about" element={<About />}/>
+             <Route path="/contact" element={<Contact/>}/>
+             <Route path="/help" element={<Help/>}/>
              <Route path="/movie/:id" element={<MovieReview/>}/>
              <Route path="/showtime/:id" element={<Showtime/>}/>
              <Route path="/seatselection/:id" element={<SeatSelection/>}/>

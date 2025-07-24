@@ -14,6 +14,9 @@
     padding-bottom: 10px;
 }
 
+.cont a {
+    text-decoration: none;
+}
 .tag{
     color: #00adb5;
     font-size: 22px;
@@ -24,3 +27,4 @@
 .tag:hover{
     color:aliceblue;
 }
+
