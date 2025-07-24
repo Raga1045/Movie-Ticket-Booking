@@ -62,3 +62,43 @@
   border-top-right-radius: 100px;
   font-size: 18px;
 }
+
+.seat-legend {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 20px;
+  color: #eeeeee;
+  background-color: #111000; /* same as screenshot background */
+  padding: 10px 0;
+  font-size: 18px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-item .seat {
+  width: 35px;
+  height: 35px;
+  border-radius: 6px;
+}
+
+/* Available seat style */
+.seat.available {
+  background-color: #1f1f1f;
+  border: 2px solid #00adb5;
+}
+
+/* Selected seat style */
+.seat.selected {
+  background-color: #00adb5;
+}
+
+/* Booked seat style */
+.seat.booked {
+  background-color: #555555;
+  border: 2px solid #777777;
+}

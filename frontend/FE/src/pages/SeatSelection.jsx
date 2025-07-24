@@ -95,6 +95,26 @@ const SeatSelection = () => {
     
     <div className="seat-selection-container">
       <h2>Select Your Seats</h2>
+      <br></br>
+
+      <div className="seat-legend">
+  <div className="legend-item">
+    <div className="seat available"></div>
+    <span>available</span>
+  </div>
+  <div className="legend-item">
+    <div className="seat selected"></div>
+    <span>selected</span>
+  </div>
+  <div className="legend-item">
+    <div className="seat booked"></div>
+    <span>booked</span>
+  </div>
+</div>
+
+<br></br>
+<br></br>
+
       <div className="seats-grid">
         {getGroupedSeats(seats, seatsPerRow).map((row, rowIndex) => (
           <div className="seat-row" key={rowIndex}>
