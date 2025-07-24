@@ -92,6 +92,7 @@ const SeatSelection = () => {
   if (loading) return <div>Loading seat layout...</div>;
 
   return (
+    
     <div className="seat-selection-container">
       <h2>Select Your Seats</h2>
       <div className="seats-grid">
@@ -109,9 +110,25 @@ const SeatSelection = () => {
           </div>
         ))}
       </div>
+
+      <br></br>
+      <br></br>
+
+       <center><div className="screen">
+          <br></br><div>
+            screen this way
+          </div>
+      </div></center>
+
+      <br></br>
+      <br></br>
+      <br></br>
+
       <button className="book-button" onClick={handleBooking}>
-        Book Selected Seats
+        <b>BOOK SEATS</b>
       </button>
+
+      
     </div>
   );
 };
