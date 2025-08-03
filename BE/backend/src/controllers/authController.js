@@ -71,3 +71,37 @@ exports.login = async (req, res) => {
     }
 };
 
+exports.googleAuth = async (req, res) => {
+    try {
+        const { name, email, googleId} = req.body;
+
+        let user = await User.findOne({email});
+
+        if(!user) {
+            user = new User ({
+                name,
+                email,
+                googleId,
+                password: null
+            });
+
+            await user.save();
+        }
+
+        const payload = {
+            user: {
+                _id: user._id,
+                email: user.email
+            }
+        };
+
+        const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '1h'});
+
+        res.json({token});
+
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).json({message: 'Google login failed'});
+    }
+}
