@@ -1,16 +1,26 @@
 const Booking = require('../models/bookings');
 const Showtime = require('../models/showtimes');
+const mongoose = require('mongoose');
+
+//Ensure atomicity: either all updates happen or none.
+//Use MongoDB transactions with .session() for all seat-checking and booking actions, so everything is atomic and thread-safe.
 
 exports.createBooking = async (req, res) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
     try {
     const { showTimeId, seats, totalPrice } = req.body;
     const userId = req.user._id; //from auth middleware
 
-    const showtime = await Showtime.findById(showTimeId);
-    if(!showtime) return res.status(404).json({ message: 'Showtime not found'});
+    const showtime = await Showtime.findById(showTimeId).session(session);
+    if(!showtime){ 
+        await session.abortTransaction();
+        return res.status(404).json({ message: 'Showtime not found'});}
 
     const unavailable = seats.filter(seat => showtime.seats.find(s => s.seatNumber === seat && s.isBooked));
     if(unavailable.length > 0){
+        await session.abortTransaction();
         return res.status(400).json({message : `Seats already booked: ${unavailable}`});
     }//you must double-check in the backend right before confirming the booking — otherwise two people could buy the same seat.
 
@@ -20,7 +30,7 @@ exports.createBooking = async (req, res) => {
         }
         return s;
     });
-    await showtime.save();
+    await showtime.save({ session });
 
     const booking = new Booking({
         user: userId,
@@ -29,7 +39,9 @@ exports.createBooking = async (req, res) => {
         totalPrice,
         paymentStatus: 'paid'
     });
-    await booking.save();
+    await booking.save({ session });
+
+    await session.commitTransaction();
 
     res.status(201).json( {
         message: 'Booking successful!',
@@ -37,8 +49,11 @@ exports.createBooking = async (req, res) => {
     });
 }
 catch(err){
+    await session.abortTransaction();
     console.error(err);
     res.status(500).json({message : 'Server error'});
+}finally {
+    session.endSession();
 }
 
 };
