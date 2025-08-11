@@ -70,8 +70,8 @@ A full-stack movie ticket booking application that allows users to browse movies
 - React.js → Core frontend framework for building UI components
 - React Router DOM → Client-side routing between pages
 - Axios → For making HTTP requests to backend APIs
-- CSS → Custom styling (component-specific CSS files)
-- Vite → Development server & build tool (faster than CRA)
+- CSS → Custom styling
+- Vite → Development server & build tool
 
 ### **Backend**
 - Node.js → JavaScript runtime for backend
