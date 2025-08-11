@@ -91,6 +91,37 @@ A full-stack movie ticket booking application that allows users to browse movies
 ## Local Setup
 
 1. **Clone the repository**
+ git clone https://github.com/yourusername/cineverse.git
+cd Movie-Ticket-Booking
+
+2. **Setup Environment Variables**
+Create a .env file in the backend folder with the following:
+
+env
+
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+PORT=5000
+
+Replace your_mongodb_connection_string with your actual MongoDB connection URI and your_jwt_secret with any secure string.
+
+3. **Install Dependencies**
+The project has frontend and backend parts, so install dependencies for both.
+
+Backend
+
+cd ../backend
+npm install
+
+cd ../src
+node server.js
+
+Frontend
+
+cd ../FE
+npm install
+npm run dev
+
   
 ---
 
