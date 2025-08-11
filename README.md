@@ -90,6 +90,8 @@ A full-stack movie ticket booking application that allows users to browse movies
 
 ## Local Setup
 
+1. **Clone the repository**
+  
 ---
 
 ## Team Members
@@ -101,4 +103,5 @@ A full-stack movie ticket booking application that allows users to browse movies
 
 ## Demo Video Link
 
+https://drive.google.com/file/d/1hyKvL3zs0ccU5qU5xzs-5kM0U87TVgun/view?usp=drive_link
 ---
