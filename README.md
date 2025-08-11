@@ -92,8 +92,8 @@ A full-stack movie ticket booking application that allows users to browse movies
 
 1. **Clone the repository**
 ```
- git clone https://github.com/yourusername/cineverse.git
-cd Movie-Ticket-Booking
+ git clone https://github.com/Raga1045/Movie-Ticket-Booking.git
+ cd Movie-Ticket-Booking
 ```
 
 2. **Setup Environment Variables**
