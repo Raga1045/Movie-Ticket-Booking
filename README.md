@@ -97,7 +97,7 @@ A full-stack movie ticket booking application that allows users to browse movies
 ```
 
 2. **Setup Environment Variables**
-Create a .env file in the backend folder with the following:
+Create a .env file in the src folder with the following:
 
 ```
 env
